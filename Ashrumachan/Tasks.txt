@@ -1,2 +1,5 @@
 5th October 2019
-Mapping code using encoders
+    Mapping code using encoders
+    Review - submitted but try to increase the counter inside ISR and test for better precision
+7th October 2019
+    Moving holonomic bot from one possition to other 
