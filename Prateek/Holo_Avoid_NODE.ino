@@ -5,7 +5,7 @@
 //let us assume that lenth of bot=100cm 
 //xcoordinate(encX) is increase by 2 unit for 100cm changes in x direction 
 //ycoordinate(encY) is increase by 2 unit for 100cm changes in y direction 
-int encX,encY;
+volatile int encX,encY;
 
 int x,y,w;
 
@@ -25,6 +25,8 @@ int d1=2,d2=3,d3=4,d4=5;
 // Pulse count from both X and Y axis Encoder 
 volatile long encoderValueX = 0;
 volatile long encoderValueY = 0;
+volatile int d_x;
+volatile int d_y;
 
 void setup()
 {
@@ -49,23 +51,7 @@ void setup()
  
 void loop()
 {
-  if(encoderValueX/ENC_COUNT_REV==100)
-  encX++;
-  if(encoderValueX/ENC_COUNT_REV==-100)
-  encX--;
-  if(encoderValueY/ENC_COUNT_REV==100)
-  encY++;
-  if(encoderValueY/ENC_COUNT_REV==-100)
-  encY--;
- for(int i=1;i<4;i++)
- {
-    int d_x=arr[i][1]-arr[i-1][1];
-    int d_y=arr[i][2]-arr[i-1][2];
-    int angle=atan2(d_y,d_x);
-    d_x=map(angle,-90,90,-255,255);
-    d_y=map(angle,-90,90,255,-255);
-    func_want(d_x,d_y);
- }
+   func_want(d_x,d_y);
 }
  
 void updateEncoder()
@@ -79,6 +65,34 @@ void updateEncoder()
   encoderValueY--;
   else
   encoderValueY++;
+   if(encoderValueX/ENC_COUNT_REV>=100)
+   {
+     encX++;
+     encoderValueX=0;
+   }
+  if(encoderValueX/ENC_COUNT_REV<=-100)
+  {
+    encX--;
+    encoderValueX=0;
+  }
+  if(encoderValueY/ENC_COUNT_REV>=100)
+  {
+    encY++;
+    encoderValueY=0;
+  }
+  if(encoderValueY/ENC_COUNT_REV<=-100)
+  {
+    encY--;
+    encoderValueY=0;
+  }
+ for(int i=1;i<4;i++)
+ {
+    int d_x=arr[i][1]-arr[i-1][1];
+    int d_y=arr[i][2]-arr[i-1][2];
+    int angle=atan2(d_y,d_x);
+    d_x=map((90-angle),-90,90,-255,255);
+    d_y=map(angle,-90,90,255,-255);
+ }
 }
 void func_want(int x,int y)
 {
