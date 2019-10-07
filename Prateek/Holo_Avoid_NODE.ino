@@ -61,6 +61,9 @@ void loop()
  {
     int d_x=arr[i][1]-arr[i-1][1];
     int d_y=arr[i][2]-arr[i-1][2];
+    int angle=atan2(d_y,d_x);
+    d_x=map(angle,-90,90,-255,255);
+    d_y=map(angle,-90,90,255,-255);
     func_want(d_x,d_y);
  }
 }
@@ -77,11 +80,9 @@ void updateEncoder()
   else
   encoderValueY++;
 }
-void func_want(int d_x,int d_y)
+void func_want(int x,int y)
 {
    int sf=1;
-  x=map(x,-d_x,d_x,0,255);
-  y=map(y,-d_y,d_y,0,255);
   s_1 = sf * (0.1768 * x + 0.1768 * y + 0.25 * w);
   s_2 = sf * (0.1768 * x + 0.1768 * y + 0.25 * w);
   s_3 = sf * (-0.1768 * x - 0.1768 * y + 0.25 * w);
