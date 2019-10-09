@@ -10,8 +10,8 @@ int b_xS;
 int a_yS;
 int b_yS;
 int x=0,y=0;
-int prev_x,prev_y;
-int count;   //counts the no of elements in the array
+int prev_x=0,prev_y=0; //stores the immediate previous x and y 
+int count=0;   //counts the no of elements in the array
 
 int arr_x[200];
 int arr_y[200];
