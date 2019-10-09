@@ -102,7 +102,7 @@ void loop() {
     //y=final_y-initial_y; to store the live position of y
 
 
-    if (y = x) {
+    if (y == x) {
       s1 = (0.1768 *  x + 0.1768 *  y + 0.25 * 0);
       s2 = (0.1768 *  x + 0.1768 *  y + 0.25 * 0);
       s3 = (-0.1768 * x - 0.1768 *  y + 0.25 * 0);
