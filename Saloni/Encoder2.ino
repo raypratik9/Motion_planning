@@ -9,7 +9,7 @@ int a_xS;
 int b_xS;
 int a_yS;
 int b_yS;
-int x,y;
+int x=0,y=0;
 
 int *ptr_x = (int *)calloc(200, sizeof(int));
 int *ptr_y = (int *)calloc(200, sizeof(int));
@@ -43,7 +43,7 @@ void loop() {
 
  /* x = int(counter_x / 100);
   y = int(counter_y / 100);*/
-
+if(counter_x==100||counter_y==100){
   *ptr_x = x;
   *ptr_y = y;
 
@@ -55,6 +55,7 @@ void loop() {
 ptr_x++;
 ptr_y++;
 }
+ }
 
 void change_x() {
   a_xS = digitalRead(ax_en);
@@ -65,7 +66,8 @@ void change_x() {
   else
     counter_x--;
   if(counter_x==100)
-   x=x+1;
+  {x=x+1;
+   counter_x=0;}
   
 }
 
@@ -78,5 +80,6 @@ void change_y() {
   else
     counter_y--;
   if(counter_y==100)
-   y=y+1;
+  {y=y+1;
+   counter_y=0;}
 }
