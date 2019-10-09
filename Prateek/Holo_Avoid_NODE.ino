@@ -57,13 +57,15 @@ void loop()
 {
   for(int i=1;i<4;i++)
  {
+  while(encX!=arr[i][1] && encY!=arr[i][2])
+  {
     int d_x=arr[i][1]-encX;
     int d_y=arr[i][2]-encY;
     int angle=atan2(d_y,d_x);
     d_x=map((90-angle),-90,90,-255,255);
     d_y=map(angle,-90,90,255,-255);
- }
    func_want(d_x,d_y);
+  }
 }
  
 void updateEncoderX()
