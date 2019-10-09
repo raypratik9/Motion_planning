@@ -28,6 +28,10 @@ volatile long encoderValueY = 0;
 volatile int d_x;
 volatile int d_y;
 
+//ISR function for X nd Y axis
+void updateEncoderX();
+void updateEncoderY();
+ 
 void setup()
 {
   // Setup Serial Monitor
@@ -45,26 +49,30 @@ void setup()
   pinMode(s4,OUTPUT);
   
   // Attach interrupt 
-  attachInterrupt(digitalPinToInterrupt(18), updateEncoder, CHANGE);
-  attachInterrupt(digitalPinToInterrupt(19), updateEncoder, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(18), updateEncoderX, RISING);
+  attachInterrupt(digitalPinToInterrupt(19), updateEncoderY, RISING);
 }
  
 void loop()
 {
+  for(int i=1;i<4;i++)
+ {
+    int d_x=arr[i][1]-encX;
+    int d_y=arr[i][2]-encY;
+    int angle=atan2(d_y,d_x);
+    d_x=map((90-angle),-90,90,-255,255);
+    d_y=map(angle,-90,90,255,-255);
+ }
    func_want(d_x,d_y);
 }
  
-void updateEncoder()
+void updateEncoderX()
 {
   //18,19,20,21 are encoder pin 
   if(digitalRead(18)==digitalRead(20))
   encoderValueX--;
   else
   encoderValueX++;
-  if(digitalRead(19)==digitalRead(21))
-  encoderValueY--;
-  else
-  encoderValueY++;
    if(encoderValueX/ENC_COUNT_REV>=100)
    {
      encX++;
@@ -75,7 +83,15 @@ void updateEncoder()
     encX--;
     encoderValueX=0;
   }
-  if(encoderValueY/ENC_COUNT_REV>=100)
+ 
+}
+void updateEncoderY()
+{
+  if(digitalRead(19)==digitalRead(21))
+  encoderValueY--;
+  else
+  encoderValueY++;
+   if(encoderValueY/ENC_COUNT_REV>=100)
   {
     encY++;
     encoderValueY=0;
@@ -85,14 +101,6 @@ void updateEncoder()
     encY--;
     encoderValueY=0;
   }
- for(int i=1;i<4;i++)
- {
-    int d_x=arr[i][1]-arr[i-1][1];
-    int d_y=arr[i][2]-arr[i-1][2];
-    int angle=atan2(d_y,d_x);
-    d_x=map((90-angle),-90,90,-255,255);
-    d_y=map(angle,-90,90,255,-255);
- }
 }
 void func_want(int x,int y)
 {
