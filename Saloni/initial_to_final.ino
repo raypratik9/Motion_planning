@@ -119,7 +119,7 @@ void loop() {
    
     motion();
     
-    if (x > prev_x || y > prev_y) {
+    if (x != prev_x || y != prev_y) {
     Serial.print(x + (String)"," +y);
    }
 
