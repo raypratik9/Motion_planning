@@ -16,6 +16,7 @@
 
 volatile int counter_x = 0;             //counts the x axis encoder ticks
 volatile int counter_y = 0;             //counts the y axix encoder ticks
+int prev_x=0,prev_y=0;
 
 //int *ptr_x, *ptr_y;
 int final_x = 100, final_y = 100;       //final co-ordinates
@@ -95,26 +96,35 @@ void loop() {
         w= map(PS4.getAnalogHat(RightHatX),0,255,-255,255);
     }*/
   if ((initial_x <= final_x) && (initial_y <= final_y)) {
+    if(initial_x==0 && final_x==0){
+      x=0;
+      y=final_y;
+    }
+    elseif(initial_y==0 && final_y==0){
+      x=final_x;
+      y=0;
+    }
+    else{
     scale = ((final_y - initial_y) / (final_x - initial_x));
     x = initial_x;
-    y = initial_x * scale;
+    y = initial_x * scale+(final_y- (m*final_x));
     //x=final_x-initial_x; to store the live position of x
     //y=final_y-initial_y; to store the live position of y
-
-
-    if (y == x) {
+    }
+  
       s1 = (0.1768 *  x + 0.1768 *  y + 0.25 * 0);
       s2 = (0.1768 *  x + 0.1768 *  y + 0.25 * 0);
       s3 = (-0.1768 * x - 0.1768 *  y + 0.25 * 0);
       s4 = (-0.1768 * x - 0.1768 * y + 0.25 * 0);
-    }
+   
     motion();
-
-  }
-  if (counter_x == 100 || counter_y == 100) {
+    
+    if (x > prev_x || y > prev_y) {
     Serial.print(x + (String)"," +y);
    }
 
+  }
+ 
 }
 
 
@@ -131,6 +141,7 @@ void change_x() {
     counter_x--;
 
   if (counter_x == 100) {
+    prev_x=x;
     initial_x += 1;
     counter_x = 0;
 
@@ -148,6 +159,7 @@ void change_y() {
   else
     counter_y--;
   if (counter_y == 100) {
+    prev_y=y;
     initial_y += 1;
     counter_y = 0;
   }
