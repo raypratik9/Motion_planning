@@ -16,7 +16,7 @@
 
 volatile int counter_x = 0;             //counts the x axis encoder ticks
 volatile int counter_y = 0;             //counts the y axix encoder ticks
-int prev_x=0,prev_y=0;
+int prev_x=0,prev_y=0;                    //stores the immediate previous value of x and y
 
 //int *ptr_x, *ptr_y;
 int final_x = 100, final_y = 100;       //final co-ordinates
