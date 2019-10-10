@@ -45,7 +45,7 @@ void loop() {
 
  /* x = int(counter_x / 100);
   y = int(counter_y / 100);*/
-if(x>prev_x||y>prev_y){
+if(x!=prev_x||y!=prev_y){
   arr_x[count-1]=x;
   arr_y[count-1]=y;
   for (int i = 0; i < count; i++) {
