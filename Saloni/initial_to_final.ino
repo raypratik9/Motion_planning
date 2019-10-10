@@ -107,7 +107,7 @@ void loop() {
     else{
     scale = ((final_y - initial_y) / (final_x - initial_x));
     x = initial_x;
-    y = initial_x * scale+(final_y- (m*final_x));
+    y = initial_x * scale+(final_y - (scale*final_x));
     //x=final_x-initial_x; to store the live position of x
     //y=final_y-initial_y; to store the live position of y
     }
