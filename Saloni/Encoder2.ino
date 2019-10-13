@@ -10,9 +10,11 @@ int b_xS;
 int a_yS;
 int b_yS;
 int x=0,y=0;
+int prev_x=0,prev_y=0; //stores the immediate previous x and y 
+int count=0;   //counts the no of elements in the array
 
-int *ptr_x = (int *)calloc(200, sizeof(int));
-int *ptr_y = (int *)calloc(200, sizeof(int));
+int arr_x[200];
+int arr_y[200];
 
 
 void setup() {
@@ -43,19 +45,16 @@ void loop() {
 
  /* x = int(counter_x / 100);
   y = int(counter_y / 100);*/
-if(counter_x==100||counter_y==100){
-  *ptr_x = x;
-  *ptr_y = y;
-
-  for (int i = 0; i < sizeof(ptr_x); i++) {
-
-    Serial.print(ptr_x[i] + "," + ptr_y[i]);
+if(x!=prev_x||y!=prev_y){
+  arr_x[count-1]=x;
+  arr_y[count-1]=y;
+  for (int i = 0; i < count; i++) {
+    
+    Serial.print(arr_x[i] + "," +arr_y[i]);
     Serial.print("\n");
+    }
   }
-ptr_x++;
-ptr_y++;
 }
- }
 
 void change_x() {
   a_xS = digitalRead(ax_en);
@@ -66,8 +65,10 @@ void change_x() {
   else
     counter_x--;
   if(counter_x==100)
-  {x=x+1;
-   counter_x=0;}
+  { count++;
+    prev_x=x;
+    x=x+1;
+    counter_x=0;}
   
 }
 
@@ -80,6 +81,8 @@ void change_y() {
   else
     counter_y--;
   if(counter_y==100)
-  {y=y+1;
+  {count++;
+   prev_y=y;
+   y=y+1;
    counter_y=0;}
 }
