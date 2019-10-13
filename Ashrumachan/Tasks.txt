@@ -3,3 +3,6 @@
     Review - submitted but try to increase the counter inside ISR and test for better precision
 7th October 2019
     Moving holonomic bot from one possition to other through shortest path possible
+13th October 2019
+    If there are more than one obstacles say 5 whose coordinates are given then write a program to take the robot from one position to
+    other avoiding all the obstacles initial and final points can be any where but obstacles position are fixed.
